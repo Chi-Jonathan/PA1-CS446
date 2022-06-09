@@ -20,7 +20,6 @@ int main(int argc, char* argv[]){
 }
 
 int launchProcesses(char* proc[]){
-	printf("hello world (pid:%d)\n", (int) getpid());
 	char* argPtr = proc[0];
 	int i = 0;
 	while(argPtr != NULL){
@@ -37,7 +36,7 @@ int launchProcesses(char* proc[]){
 	}
 	else{
 		int wc = wait(NULL);
-		printf("hello, I am parent of %d (wc:%d) (pid:%d)\n", rc, wc, (int) getpid());
+		printf("I am parent of %d (wc:%d) (pid:%d)\n", rc, wc, (int) getpid());
 	}
 	return 0;
 }
