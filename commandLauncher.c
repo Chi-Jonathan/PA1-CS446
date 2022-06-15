@@ -28,7 +28,7 @@ int launchProcesses(char* proc[]){
 	}
 	int rc = fork();
 	if (rc<0){
-		fprintf(stderr, "fork failed\n");
+		printf("fork failed!\n");
 		return -1;
 	}
 	else if (rc == 0){
