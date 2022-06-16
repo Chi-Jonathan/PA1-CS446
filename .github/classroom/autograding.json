@@ -1,0 +1,84 @@
+{
+  "tests": [
+    {
+      "name": "Check C compilation",
+      "setup": "",
+      "run": "gcc -o commandLauncher commandLauncher.c",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": null
+    },
+    {
+      "name": "Run Process API executable",
+      "setup": "",
+      "run": "./commandLauncher ls -la",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": null
+    },
+    {
+      "name": "Check Process API output",
+      "setup": "",
+      "run": "./commandLauncher ls",
+      "input": "",
+      "output": "README.md\r\npa2_batchfile.txt\r\ncommandLauncher.c",
+      "comparison": "included",
+      "timeout": 3,
+      "points": null
+    },
+    {
+      "name": "Priority Sort",
+      "setup": "",
+      "run": "python3 batchSchedulingComparison.py pa2_batchfile.txt Priority",
+      "input": "",
+      "output": "PID ORDER OF EXECUTION:\r\n\r\n3\r\n1\r\n7\r\n2\r\n\r\nAverage Process Turnaround Time: 65.25\r\nAverage Process Wait Time: 43.75",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Shortest Remaining Sort",
+      "setup": "",
+      "run": "python3 batchSchedulingComparison.py pa2_batchfile.txt ShortestRemaining",
+      "input": "",
+      "output": "PID ORDER OF EXECUTION:\r\n\r\n1\r\n7\r\n1\r\n2\r\n3\r\n\r\nAverage Process Turnaround Time: 35.00\r\nAverage Process Wait Time: 13.5",
+      "comparison": "included",
+      "timeout": 10,
+      "points": null
+    },
+    {
+      "name": "Check CLA",
+      "setup": "",
+      "run": "python3 batchSchedulingComparison.py",
+      "input": "",
+      "output": "Please provide command line arguments when running.\r\npython3 batchSchedulingComparison.py batchfile.txt Priority",
+      "comparison": "included",
+      "timeout": 2,
+      "points": null
+    },
+    {
+      "name": "Check for batch file",
+      "setup": "",
+      "run": "python3 batchSchedulingComparison.py batchfile.txt Priority",
+      "input": "",
+      "output": " Input batchfile not found!",
+      "comparison": "included",
+      "timeout": 2,
+      "points": null
+    },
+    {
+      "name": "Bad Sort Name",
+      "setup": "",
+      "run": "python3 batchSchedulingComparison.py pa2_batchfile.txt FCFS",
+      "input": "",
+      "output": "Unidentified sorting algorithm. Please input either ShortestRemaining or Priority.",
+      "comparison": "included",
+      "timeout": 2,
+      "points": null
+    }
+  ]
+}
