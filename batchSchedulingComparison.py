@@ -15,8 +15,19 @@ def main():
 		print("Input batchfile not found!")
 		return 1
 	if sys.argv[2] == "ShortestRemaining":
-		#ShortestRemainingSort(datadict)
-		print("fjka")
+		burst_times = []
+		arrival_times = []
+		for i in range(len(fdata)):
+			burst_times.append(fdata[i][2])
+		for i in range(len(fdata)):
+			arrival_times.append(fdata[i][1])  
+		pid, time_completed = ShortestRemainingSort(fdata)
+		avg_tat, tat, avg_wt, wt = ComputeStat(time_completed, arrival_times, burst_times) 
+		print("\nPID ORDER OF EXECUTION: \n")
+		for i in range(len(pid)):
+			print(pid[i])
+		print("\nAverage Process Turnaround Time: ", avg_tat)
+		print("Average Process Wait TIme: ", avg_wt)
 	elif sys.argv[2] == "Priority":
 		pid, time_completed = PrioritySort(fdata)
 		burst_times = []
@@ -43,20 +54,47 @@ def ComputeStat(processCompletionTimes, processArrivalTimes, processBurstTimes):
 	avg_tat = tat/count
 	return avg_tat, tat, avg_wt, wt
 	
-#def ShortestRemainingSort(batchFileData):
+def ShortestRemainingSort(batchFileData):
+	process_count = len(batchFileData)
+	batchFileData = sorted(batchFileData, key = lambda batchFileData:batchFileData[1])
+	time = 0
+	completed = 0
+	completed_proc = []
+	pid = [-1]
+	last_pid = -1
+	time_completed = []
+	while(completed != process_count):
+		waiting_processes = []
+		for i in range(process_count):
+			if (batchFileData[i][1]<=time) and (batchFileData[i] not in completed_proc):
+				waiting_processes.append(batchFileData[i])
+		waiting_processes = sorted(waiting_processes, key = lambda waiting_processes:waiting_processes[2])
+		if len(waiting_processes)==0:
+			time+=1
+			continue
+		if waiting_processes[0][0] != pid[0]:
+			pid.insert(0,waiting_processes[0][0])
+		waiting_processes[0][2] -= 1
+		time += 1
+		if waiting_processes[0][2] == 0:
+			completed_proc.append(waiting_processes[0])
+			time_completed.append(time)
+			completed+=1
+	pid.reverse()
+	pid.remove(-1)
+	return pid, time_completed
 
 def PrioritySort(batchFileData):
 	process_count = len(batchFileData)
 	batchFileData = sorted(batchFileData, key = lambda batchFileData:batchFileData[1])
 	time = 0
-	check = True
 	completed = 0
 	completed_proc = []
 	pid = []
 	time_completed = []
 	while(completed != process_count):
 		waiting_processes = []
-		for i in range(process_count): #remember u did a -1 here could mess you up in the future, and it probably will you idiot
+		for i in range(process_count):
 			if (batchFileData[i][1]<=time) and (batchFileData[i] not in completed_proc):
 				waiting_processes.append(batchFileData[i])
 		waiting_processes = sorted(waiting_processes, key = lambda waiting_processes:waiting_processes[3])

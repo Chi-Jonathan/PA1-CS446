@@ -36,7 +36,6 @@ int launchProcesses(char* proc[]){
 	}
 	else{
 		int wc = wait(NULL);
-		printf("I am parent of %d (wc:%d) (pid:%d)\n", rc, wc, (int) getpid());
 	}
 	return 0;
 }
